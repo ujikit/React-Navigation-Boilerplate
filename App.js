@@ -70,15 +70,15 @@ export default function App() {
             let iconName;
 
             if (route.name === 'Home') {
-              iconName = focused
-                ? 'ios-information-circle'
-                : 'ios-information-circle-outline';
+              iconName = 'home';
+              iconColor = focused ? 'tomato' : 'gray';
             } else if (route.name === 'Settings') {
-              iconName = focused ? 'ios-list-box' : 'ios-list';
+              iconName = focused ? 'settings-sharp' : 'ios-settings-outline';
+              iconColor = focused ? 'tomato' : 'gray';
             }
 
             // You can return any component that you like here!
-            return <Icon name="star" type="Ionicons" style={{ fontSize: 12, color: 'black', paddingRight: 3 }}/>;
+            return <Icon name={iconName} type="Ionicons" style={{ fontSize: 22, color: iconColor, paddingRight: 3 }}/>;
           },
         })}
         tabBarOptions={{

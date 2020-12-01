@@ -42,6 +42,8 @@ target 'webview' do
 
   pod 'RNCMaskedView', :path => '../node_modules/@react-native-community/masked-view'
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'webviewTests' do
     inherit! :search_paths
     # Pods for testing
