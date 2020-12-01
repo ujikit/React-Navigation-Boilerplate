@@ -4,47 +4,25 @@ import { Icon } from 'native-base';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {Provider} from 'react-redux';
 
-function DetailsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Details!</Text>
-    </View>
-  );
-}
-
-function HomeScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home screen</Text>
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('Details')}
-      />
-    </View>
-  );
-}
-
-function SettingsScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings screen</Text>
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('Details')}
-      />
-    </View>
-  );
-}
+// configs
+import {store, persistor} from './src/states/store/store';
+// screens
+import Home from './src/screens/Home';
+import Settings from './src/screens/Settings';
+import Detail from './src/screens/Detail';
 
 const HomeStack = createStackNavigator();
 
 function HomeStackScreen() {
   return (
-    <HomeStack.Navigator>
-      <HomeStack.Screen name="Home" component={HomeScreen} />
-      <HomeStack.Screen name="Details" component={DetailsScreen} />
-    </HomeStack.Navigator>
+    <Provider store={store}>
+      <HomeStack.Navigator>
+        <HomeStack.Screen name="Home" component={Home} />
+        <HomeStack.Screen name="Detail" component={Detail} />
+      </HomeStack.Navigator>
+    </Provider>
   );
 }
 
@@ -52,10 +30,12 @@ const SettingsStack = createStackNavigator();
 
 function SettingsStackScreen() {
   return (
-    <SettingsStack.Navigator>
-      <SettingsStack.Screen name="Settings" component={SettingsScreen} />
-      <SettingsStack.Screen name="Details" component={DetailsScreen} />
-    </SettingsStack.Navigator>
+    <Provider store={store}>
+      <SettingsStack.Navigator>
+        <SettingsStack.Screen name="Settings" component={Settings} />
+        <SettingsStack.Screen name="Detail" component={Detail} />
+      </SettingsStack.Navigator>
+    </Provider>
   );
 }
 
