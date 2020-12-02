@@ -9,6 +9,7 @@ import {Provider} from 'react-redux';
 // configs
 import {store, persistor} from './src/states/store/store';
 // screens
+import Drawer from './src/routes/DrawerNavigator';
 import Home from './src/screens/Home';
 import Settings from './src/screens/Settings';
 import Detail from './src/screens/Detail';
@@ -19,7 +20,7 @@ function HomeStackScreen() {
   return (
     <Provider store={store}>
       <HomeStack.Navigator>
-        <HomeStack.Screen name="Home" component={Home} />
+        <HomeStack.Screen name="Home" component={Drawer} />
         <HomeStack.Screen name="Detail" component={Detail} />
       </HomeStack.Navigator>
     </Provider>
@@ -32,7 +33,7 @@ function SettingsStackScreen() {
   return (
     <Provider store={store}>
       <SettingsStack.Navigator>
-        <SettingsStack.Screen name="Settings" component={Settings} />
+        <SettingsStack.Screen name="Settings" component={Drawer} />
         <SettingsStack.Screen name="Detail" component={Detail} />
       </SettingsStack.Navigator>
     </Provider>
