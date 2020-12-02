@@ -33,7 +33,7 @@ function SettingsStackScreen() {
   return (
     <Provider store={store}>
       <SettingsStack.Navigator>
-        <SettingsStack.Screen name="Settings" component={Drawer} />
+        <SettingsStack.Screen name="Settings" component={Settings} />
         <SettingsStack.Screen name="Detail" component={Detail} />
       </SettingsStack.Navigator>
     </Provider>
