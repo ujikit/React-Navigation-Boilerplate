@@ -189,7 +189,6 @@ dependencies {
     implementation project(':react-native-gesture-handler')
     // Multidex
     implementation 'com.android.support:multidex:1.0.3'
-    implementation project(':react-native-admob')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
