@@ -4,16 +4,9 @@
 import * as React from 'react';
 import {Button, View, Text, SafeAreaView} from 'react-native';
 
-// components
-import CustomHeader from '../components/CustomHeader';
-
-const HomeScreen = ({route, navigation}) => {
+const SettingScreen = ({navigation}) => {
   return (
     <SafeAreaView style={{flex: 1}}>
-      <CustomHeader
-        route={route}
-        navigation={navigation}
-      />
       <View style={{flex: 1, padding: 16}}>
         <View
           style={{
@@ -27,20 +20,36 @@ const HomeScreen = ({route, navigation}) => {
               textAlign: 'center',
               marginBottom: 16,
             }}>
-            Home Screen
+            Setting Screen
           </Text>
           <Button
-            onPress={() => navigation.navigate('SettingScreen')}
-            title="Go to Setting Screen"
+            onPress={() => navigation.navigate('HomeScreen')}
+            title="Go to Home Screen"
           />
           <Button
             onPress={() => navigation.navigate('ExploreScreen')}
             title="Go to Explore Screen"
           />
         </View>
+        <Text
+          style={{
+            fontSize: 18,
+            textAlign: 'center',
+            color: 'grey'
+          }}>
+          React Navigate Drawer with Bottom Tab
+        </Text>
+        <Text
+          style={{
+            fontSize: 16,
+            textAlign: 'center',
+            color: 'grey'
+          }}>
+          www.aboutreact.com
+        </Text>
       </View>
     </SafeAreaView>
   );
 };
 
-export default HomeScreen;
+export default SettingScreen;

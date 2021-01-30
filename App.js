@@ -1,84 +1,153 @@
 import * as React from 'react';
-import { Button, Text, View } from 'react-native';
-import { Icon } from 'native-base';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {Provider} from 'react-redux';
+import {View, TouchableOpacity, Text, Image} from 'react-native';
+import {Icon} from 'native-base';
+import {
+  NavigationContainer,
+  getFocusedRouteNameFromRoute,
+} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-// configs
-import {store, persistor} from './src/states/store/store';
+// components
+import {MAIN_COLOR} from './src/configs/Color';
 // screens
-import Drawer from './src/routes/DrawerNavigator';
-import Home from './src/screens/Home';
-import Settings from './src/screens/Settings';
-import Detail from './src/screens/Detail';
+import HomeScreen from './src/screens/Home';
+import ExploreScreen from './src/screens/Explore';
+import SettingScreen from './src/screens/Setting';
 
-const HomeStack = createStackNavigator();
-
-function HomeStackScreen() {
-  return (
-    <Provider store={store}>
-      <HomeStack.Navigator>
-        <HomeStack.Screen name="Home" component={Drawer} />
-        <HomeStack.Screen name="Detail" component={Detail} />
-      </HomeStack.Navigator>
-    </Provider>
-  );
-}
-
-const SettingsStack = createStackNavigator();
-
-function SettingsStackScreen() {
-  return (
-    <Provider store={store}>
-      <SettingsStack.Navigator>
-        <SettingsStack.Screen name="Settings" component={Settings} />
-        <SettingsStack.Screen name="Detail" component={Detail} />
-      </SettingsStack.Navigator>
-    </Provider>
-  );
-}
-
+const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
-export default function App() {
+const getHeaderTitle = route => {
+  const routeName = getFocusedRouteNameFromRoute(route) ?? 'Feed';
+  switch (routeName) {
+    case 'HomeScreen':
+      return 'Home';
+    case 'ExploreScreen':
+      return 'Explore';
+  }
+  return 'Home';
+};
+
+const BottomTabStack = () => {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
+    <Tab.Navigator
+      initialRouteName="HomeScreen"
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({focused}) => {
 
-            if (route.name === 'Home') {
-              iconName = 'home';
-              iconColor = focused ? 'tomato' : 'gray';
-            } else if (route.name === 'Settings') {
-              iconName = focused ? 'settings-sharp' : 'ios-settings-outline';
-              iconColor = focused ? 'tomato' : 'gray';
-            }
+          let tabIconName;
+          let tabIconColor;
 
-            // You can return any component that you like here!
-            return <Icon name={iconName} type="Ionicons" style={{ fontSize: 22, color: iconColor, paddingRight: 3 }}/>;
+          if (route.name === 'HomeScreen') {
+            tabIconName = 'home';
+            tabIconColor = focused ? MAIN_COLOR : 'gray';
+          } else if (route.name === 'ExploreScreen') {
+            tabIconName = focused ? 'settings-sharp' : 'ios-settings-outline';
+            tabIconColor = focused ? MAIN_COLOR : 'gray';
+          }
+
+          return <View
+            style={{flex: 1, justifyContent: 'center', marginBottom: -10}}>
+            <Icon
+              name={tabIconName}
+              type="Ionicons"
+              style={{fontSize: 20, color: tabIconColor}}
+            />
+          </View>
+
+        },
+        tabBarLabel: ({focused}) => {
+
+          let tabLabelName;
+          let tabLabelColor;
+
+          if (route.name === 'HomeScreen') {
+            tabLabelName = 'Home';
+            tabLabelColor = focused ? MAIN_COLOR : 'gray';
+          } else if (route.name === 'ExploreScreen') {
+            tabLabelName = 'Explore';
+            tabLabelColor = focused ? MAIN_COLOR : 'gray';
+          }
+
+          return <View style={{flex: 1, justifyContent: 'center', marginTop: -5}}>
+            <Text style={{fontSize: 12, color: tabLabelColor}}>{tabLabelName}</Text>
+          </View>
+
+        },
+      })}
+      tabBarOptions={{
+        activeTintColor: MAIN_COLOR,
+        inactiveTintColor: 'gray',
+        style: {
+          height: 55,
+          justifyContent: 'center',
+          backgroundColor: '#e0e0e0',
+        },
+        labelStyle: {
+          fontSize: 12,
+        },
+      }}>
+      <Tab.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+      />
+      <Tab.Screen
+        name="ExploreScreen"
+        component={ExploreScreen}
+      />
+    </Tab.Navigator>
+  );
+};
+
+const NavigatorStack = ({navigation}) => {
+  return (
+    <Stack.Navigator initialRouteName="HomeScreen">
+      <Stack.Screen
+        name="BottomTabStack"
+        component={BottomTabStack}
+        options={({route}) => ({
+          headerShown: false,
+          headerTitle: getHeaderTitle(route),
+          headerStyle: {
+            backgroundColor: '#f4511e',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
           },
         })}
-        tabBarOptions={{
-          activeTintColor: 'tomato',
-          inactiveTintColor: 'gray',
+      />
+      <Stack.Screen
+        name="SettingScreen"
+        component={SettingScreen}
+        options={{
+          title: 'Setting',
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const DrawerStack = () => {
+  return (
+    <NavigationContainer>
+      <Drawer.Navigator
+        drawerContentOptions={{
+          activeTintColor: '#e91e63',
+          itemStyle: {marginVertical: 5},
         }}
       >
-        <Tab.Screen
-          name="Home"
-          component={HomeStackScreen}
-          options={{
-            tabBarBadge: 3
-          }}
+        <Drawer.Screen
+          name="NavigatorStack"
+          options={{drawerLabel: 'Home Screen Option'}}
+          component={NavigatorStack}
         />
-        <Tab.Screen
-          name="Settings"
-          component={SettingsStackScreen}
-        />
-      </Tab.Navigator>
+      </Drawer.Navigator>
     </NavigationContainer>
   );
-}
+};
+
+export default DrawerStack;
