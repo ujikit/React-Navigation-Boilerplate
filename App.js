@@ -10,6 +10,8 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 // components
+import CustomSidebar from './src/components/CustomSidebar';
+// configs
 import {MAIN_COLOR} from './src/configs/Color';
 // screens
 import HomeScreen from './src/screens/Home';
@@ -135,6 +137,9 @@ const DrawerStack = () => {
   return (
     <NavigationContainer>
       <Drawer.Navigator
+        drawerContent={
+          props => <CustomSidebar {...props}/>
+        }
         drawerContentOptions={{
           activeTintColor: '#e91e63',
           itemStyle: {marginVertical: 5},

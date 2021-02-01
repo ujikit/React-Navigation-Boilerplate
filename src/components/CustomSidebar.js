@@ -7,7 +7,7 @@ import { connect, useDispatch } from 'react-redux';
 import { MAIN_COLOR, BLACK_FONT } from '../configs/Color'
 import { MAIN_FONT, MAIN_FONT_BOLD } from '../configs/Font'
 
-function CustomSidebarScreen ({route, navigation}) {
+function CustomSidebarComponent ({route, navigation}) {
 
   return (
     <Container>
@@ -53,4 +53,4 @@ function CustomSidebarScreen ({route, navigation}) {
   )
 }
 
-export default connect(state => ({}))(CustomSidebarScreen);
+export default CustomSidebarComponent;

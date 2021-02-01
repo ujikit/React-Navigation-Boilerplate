@@ -7,7 +7,7 @@ import {connect} from "react-redux";
 // configs
 import { MAIN_COLOR } from '../configs/Color'
 
-function CustomHeaderComponent ({navigation}) {
+function CustomHeaderComponent ({route, navigation}) {
 
   return (
     <View style={{ flexDirection: 'row', height: 58.5, backgroundColor: MAIN_COLOR }}>
